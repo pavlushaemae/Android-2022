@@ -4,37 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".MainActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_message"
+        android:layout_width="236dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="4dp"
+        android:hint="@string/put_text"
+        app:layout_constraintBottom_toTopOf="@id/btn_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_1"
-        android:layout_width="wrap_content"
+        android:layout_width="236dp"
         android:layout_height="wrap_content"
-        android:text="button1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/send_message"
+        app:layout_constraintBottom_toTopOf="@id/til_number"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_message" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_number"
+        android:layout_width="236dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="4dp"
+        android:hint="@string/put_text"
         app:layout_constraintBottom_toTopOf="@id/btn_2"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_1">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_2"
-        android:layout_width="wrap_content"
+        android:layout_width="236dp"
         android:layout_height="wrap_content"
-        android:text="button2"
-        app:layout_constraintTop_toBottomOf="@id/btn_1"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/phone"
+        app:layout_constraintBottom_toTopOf="@id/til_url"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_3"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_number" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_url"
+        android:layout_width="236dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="4dp"
+        android:hint="@string/put_url"
+        app:layout_constraintBottom_toTopOf="@id/btn_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_3"
-        android:layout_width="wrap_content"
+        android:layout_width="236dp"
         android:layout_height="wrap_content"
-        android:text="button3"
-        app:layout_constraintTop_toBottomOf="@id/btn_2"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/view_url"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_url" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

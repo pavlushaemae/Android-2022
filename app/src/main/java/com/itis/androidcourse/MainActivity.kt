@@ -18,46 +18,62 @@ class MainActivity : AppCompatActivity() {
 
         with(binding) {
             btn1.setOnClickListener {
-                val intent = Intent()
-                intent.action = Intent.ACTION_SEND
-                intent.putExtra(Intent.EXTRA_TEXT, "message")
-                intent.type = "text/plan"
-
-                val chooserIntent = Intent.createChooser(
-                    intent,
-                    "Сообщение"
-                )
-                if (chooserIntent.resolveActivity(packageManager) != null) {
-                    startActivity(intent)
+                if (etMessage.text.toString() != "") {
+                    sendMessage(etMessage.text.toString())
                 }
             }
 
             btn2.setOnClickListener {
-                val intent = Intent()
-                intent.action = Intent.ACTION_CALL
-                intent.putExtra(Intent.EXTRA_TEXT, Uri.parse("+79911153704"))
-                intent.type = "text/plan"
-
-                val chooserIntent = Intent.createChooser(
-                    intent,
-                    "Звонок"
-                )
-                if (chooserIntent.resolveActivity(packageManager) != null) {
-                    startActivity(intent)
+                if (etNumber.text.toString() != "") {
+                    callToNum(etNumber.text.toString())
                 }
             }
 
             btn3.setOnClickListener {
-//                val intent = Intent(Intent.ACTION_CREATE_NOTE).apply {
-//                    putExtra(NoteIntents.EXTRA_NAME, subject)
-//                    putExtra(NoteIntents.EXTRA_TEXT, text)
-//                }
-//                if (intent.resolveActivity(packageManager) != null) {
-//                    startActivity(intent)
-//                }
-
+                if (etUrl.text.toString() != "") {
+                    openWebPage(etUrl.text.toString())
+                }
             }
         }
+    }
 
+    private fun sendMessage(message: String) {
+        val intent = Intent()
+        intent.action = Intent.ACTION_SEND
+        intent.putExtra(Intent.EXTRA_TEXT, message)
+        intent.type = "text/plan"
+
+        val chooserIntent = Intent.createChooser(
+            intent,
+            "Сообщение"
+        )
+        if (chooserIntent.resolveActivity(packageManager) != null) {
+            startActivity(chooserIntent)
+        }
+    }
+
+    private fun callToNum(num: String) {
+        val intent = Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:$${num}")
+        }
+        val chooserIntent = Intent.createChooser(
+            intent,
+            "Звонок"
+        )
+        if (chooserIntent.resolveActivity(packageManager) != null) {
+            startActivity(chooserIntent)
+        }
+    }
+
+    private fun openWebPage(url: String) {
+        val webpage: Uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+        val chooserIntent = Intent.createChooser(
+            intent,
+            "Страница в вк"
+        )
+        if (chooserIntent.resolveActivity(packageManager) != null) {
+            startActivity(chooserIntent)
+        }
     }
 }

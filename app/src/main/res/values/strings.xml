@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Android Course</string>
+    <string name="send_message">Отправить текст</string>
+    <string name="phone">Позвонить по номеру</string>
+    <string name="view_url">Перейти по URL</string>
+    <string name="put_number">Введите номер телефона с кодом региона</string>
+    <string name="put_text">Введите текст</string>
+    <string name="put_url">Введите URL</string>
 </resources>
