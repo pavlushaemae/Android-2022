@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">Android Course</string>
+    <string name="name">pavlushaemae</string>
+    <string name="cheater">Я софт</string>
+    <string name="level">Уровень</string>
+    <string name="level_3">3</string>
+    <string name="posol">Посол сообщества</string>
+    <string name="points">200 ед. опыта</string>
+    <string name="edit">Редактировать профиль</string>
+    <string name="welcome">═══════════════ஜ۩۞۩ஜ════════════════ W E L C O M E - T O - M Y - P R O F I L E ═══════════════ஜ۩۞۩ஜ════════════════</string>
+    <string name="online">В сети</string>
+    <string name="icons">Значки</string>
+    <string name="two_icons">2</string>
+    <string name="groups">Группы</string>
+    <string name="groups_one">1</string>
+    <string name="friends">Друзья</string>
+    <string name="thirty_one">31</string>
+    <string name="screenshots">Cкриншоты</string>
+    <string name="games">Игры</string>
+    <string name="inventory">Инвентарь</string>
+    <string name="videos">Видео</string>
+    <string name="works">Работы в мастерской</string>
+    <string name="reviews">Обзоры</string>
+    <string name="documentation">Руководства</string>
+    <string name="illustrations">Иллюстрации</string>
 </resources>
