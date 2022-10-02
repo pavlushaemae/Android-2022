@@ -15,12 +15,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         with(binding) {
             btnEdit.setOnClickListener {
-                if (tvName.visibility == View.GONE) {
-                    tvName.visibility = View.VISIBLE
-                    ivArrow.visibility = View.VISIBLE
+                if (groupName.visibility == View.GONE) {
+                    groupName.visibility = View.VISIBLE
                 } else {
-                    tvName.visibility = View.GONE
-                    ivArrow.visibility = View.GONE
+                    groupName.visibility = View.GONE
                 }
             }
         }
