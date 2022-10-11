@@ -12,63 +12,60 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.textfield.TextInputLayout
 import com.itis.androidcourse.databinding.FragmentFirstBinding
-import java.lang.NumberFormatException
 
-class CounterDialog : DialogFragment(R.layout.fragment_dialog) {
+
+class CounterDialog : DialogFragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
 
     private var counter = 0
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentFirstBinding.bind(view)
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        _binding = FragmentFirstBinding.bind(view)
+//    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 //        savedInstanceState?.getInt("ARG_COUNT")?.let {
 //            counter = it
 //        }
         var num = 0
-        val editText = view?.findViewById<EditText>(R.id.et_number)
-        val inputLayout = view?.findViewById<TextInputLayout>(R.id.til_text)
-        val view = LayoutInflater.from(requireContext())
+
+        val viewDialog = LayoutInflater.from(requireContext())
             .inflate(R.layout.fragment_dialog, null, false)
+        val editText = viewDialog?.findViewById<EditText>(R.id.et_number)
+        val inputLayout = viewDialog?.findViewById<TextInputLayout>(R.id.til_text)
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle("Сложить или вычесть?")
-            .setView(view)
+            .setView(viewDialog)
             .setPositiveButton("Сложить", null)
             .setNegativeButton("Отменить") { dialog, _ ->
                 dialog.dismiss()
             }
             .setNeutralButton("Вычесть", null)
-            .create()
-
-        val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-        positiveButton.setOnClickListener {
+            .show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             try {
                 num = editText?.text.toString().toInt()
                 if (num in 0..100) {
                     counter += num
-
+                    sendNum(counter)
+                    dialog.dismiss()
                 } else {
                     inputLayout?.error = "Не верный формат данных"
                 }
-                val intent = Intent().putExtra(ARG_NUM, counter)
-
-                dismiss()
             } catch (e: NumberFormatException) {
                 inputLayout?.error = "Не верный формат данных"
             }
         }
-        val neutralButton: Button = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-        neutralButton.setOnClickListener {
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
             try {
                 num = editText?.text.toString().toInt()
                 when {
                     (num in 0..100 && counter - num >= 0) -> {
                         counter -= num
-
+                        sendNum(counter)
+                        dialog.dismiss()
                     }
                     (counter - num < 0 && num in 0..100) -> {
                         inputLayout?.error =
@@ -78,13 +75,11 @@ class CounterDialog : DialogFragment(R.layout.fragment_dialog) {
                         inputLayout?.error = "Не верный формат данных"
                     }
                 }
-                val intent = Intent().putExtra(ARG_NUM, counter)
             } catch (e: NumberFormatException) {
                 inputLayout?.error = "Не верный формат данных"
             }
 
         }
-
         return dialog
 //        activity?.let {
 //            val builder = AlertDialog.Builder(it)
@@ -132,9 +127,12 @@ class CounterDialog : DialogFragment(R.layout.fragment_dialog) {
     }
 
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(ARG_NUM, counter)
+    private fun sendNum(num: Int) {
+        val fragment = FirstFragment()
+        val bundle = Bundle()
+        bundle.putInt(ARG_NUM, num)
+        fragment.arguments = bundle
+//        parentFragmentManager.beginTransaction().replace(R.id.container, fragment)
     }
 
     companion object {

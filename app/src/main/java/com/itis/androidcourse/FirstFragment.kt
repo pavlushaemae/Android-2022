@@ -56,6 +56,10 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
             }
             btnDialog.setOnClickListener {
                 CounterDialog.newInstance(childFragmentManager)
+                arguments?.getInt("ARG_NUM")?.let {
+                    counter = it
+                    tvCounter.text = "Counter value: $counter"
+                }
 //                val view = LayoutInflater.from(requireContext())
 //                    .inflate(R.layout.fragment_dialog, null, false)
 //                view.run {
