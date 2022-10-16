@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Android Course</string>
+    <string name="dogs">Собачки</string>
+    <string name="dog">Собачка</string>
+    <string name="id">Id:</string>
+    <string name="country">Country:</string>
+    <string name="description">Description:</string>
 </resources>
