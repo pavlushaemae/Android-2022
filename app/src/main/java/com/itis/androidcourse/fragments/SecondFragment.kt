@@ -27,7 +27,7 @@ class SecondFragment : Fragment(R.layout.fragment_second) {
         val id: Int = arguments?.run {
             getInt(ARG_ID)
         } ?: 0
-        val dog = DogRepository.getDogById(id)
+        val dog = DogRepository.getDogById(id.toLong())
         val glide = Glide.with(this)
         with(binding) {
             tvId.text = "Id: $id"

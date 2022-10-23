@@ -5,4 +5,9 @@
     <string name="id">Id:</string>
     <string name="country">Country:</string>
     <string name="description">Description:</string>
+    <string name="title">Заголовок</string>
+    <string name="descript">Описание</string>
+    <string name="position">Позиция</string>
+    <string name="delete">Удалить</string>
+    <string name="country_ru">Страна</string>
 </resources>
