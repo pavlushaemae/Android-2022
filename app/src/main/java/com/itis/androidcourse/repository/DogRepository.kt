@@ -173,7 +173,8 @@ object DogRepository {
             "Германия",
             "Такса – без преувеличения самая «обаятельная и привлекательная» среди огромного количества пород. Очарование этой собаки позволило ей игнорировать веяния капризной и переменчивой моды, оставаясь вот уже более двух столетий в топ-списках по популярности. Среди верных поклонников породы можно встретить как заядлых охотников, так и людей, которые искренне воспринимают таксу исключительно комнатной собакой. Главным остается то, что все они считают своих любимцев эталоном собачьего ума, храбрости, преданности, любви и красоты.",
             "https://lapkins.ru/upload/resize_cache/uf/3c0/293_293_2/3c0d32acef3eae66b49d287ce4f97c08.jpg"
-        ))
+        )
+    )
 
     fun getDogById(id: Long): Dog? {
         listOfDog.forEach {
@@ -185,16 +186,16 @@ object DogRepository {
 
     val items: MutableList<Item>
         get() = arrayListOf<Item>().apply {
-        var count = 1
-        var id = 0L
-        for (dog in listOfDog) {
+            var count = 1
+            var id = 0L
+            for (dog in listOfDog) {
                 add(dog)
                 count++
-            if (count == 6) {
-                add(Item.Ad(id))
-                id++
-                count = 1
+                if (count == 6) {
+                    add(Item.Ad(id))
+                    id++
+                    count = 1
+                }
             }
         }
-    }
 }

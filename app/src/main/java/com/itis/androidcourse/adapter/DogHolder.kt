@@ -2,7 +2,6 @@ package com.itis.androidcourse.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Priority
 import com.bumptech.glide.RequestManager
@@ -10,10 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.itis.androidcourse.R
 import com.itis.androidcourse.databinding.ItemDogBinding
-import com.itis.androidcourse.helper.SwipeToDeleteCallback
 import com.itis.androidcourse.model.Dog
-import com.itis.androidcourse.model.Item
-import com.itis.androidcourse.repository.DogRepository
 
 class DogHolder(
     private val binding: ItemDogBinding,
@@ -52,6 +48,7 @@ class DogHolder(
                 .into(ivPhoto)
         }
     }
+
     companion object {
         const val ARG_NAME = "arg_name"
 

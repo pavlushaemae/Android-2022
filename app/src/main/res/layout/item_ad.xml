@@ -14,14 +14,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="#5E553B">
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Реклама"
             android:layout_marginTop="40dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/ad"
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@id/iv_ad"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+
+            android:contentDescription="@string/ad"
             android:scaleType="centerCrop"
             android:src="@drawable/default_dog"
             app:layout_constraintBottom_toBottomOf="parent"

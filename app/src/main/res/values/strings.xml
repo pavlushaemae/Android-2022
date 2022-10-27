@@ -10,4 +10,6 @@
     <string name="position">Позиция</string>
     <string name="delete">Удалить</string>
     <string name="country_ru">Страна</string>
+    <string name="button">Button</string>
+    <string name="ad">Реклама</string>
 </resources>

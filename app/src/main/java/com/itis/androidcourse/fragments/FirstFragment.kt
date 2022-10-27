@@ -1,7 +1,6 @@
 package com.itis.androidcourse.fragments
 
 import android.os.Bundle
-import android.provider.SyncStateContract
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -53,7 +52,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
                 },
                 {
-                  onDeleteClick(it)
+                    onDeleteClick(it)
                 })
             adapter?.let {
                 rvDog.adapter = ScaleInAnimationAdapter(it)
@@ -77,7 +76,10 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
             btnFloating.setOnClickListener {
                 val dialog = MyDialogFragment { title, desc, position ->
-                    DogRepository.listOfDog.add(position,Dog((DogRepository.listOfDog.size).toLong() , title, desc,"",""))
+                    DogRepository.listOfDog.add(
+                        position,
+                        Dog((DogRepository.listOfDog.size).toLong(), title, desc, "", "")
+                    )
                     val currentList = DogRepository.items
                     adapter?.submitList(currentList) {
                         rvDog.scrollToPosition(position)

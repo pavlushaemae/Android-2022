@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.textfield.TextInputLayout
 import com.itis.androidcourse.R
 import com.itis.androidcourse.model.Dog
 import com.itis.androidcourse.repository.DogRepository
@@ -41,7 +40,8 @@ class MyDialogFragment(val onClick: (String, String, Int) -> Unit) :
 
         myDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
             val title = viewDialog?.findViewById<EditText>(R.id.et_title)?.text.toString()
-            val description = viewDialog?.findViewById<EditText>(R.id.et_description)?.text.toString()
+            val description =
+                viewDialog?.findViewById<EditText>(R.id.et_description)?.text.toString()
             val position = viewDialog?.findViewById<EditText>(R.id.et_position)?.text.toString()
             var index = 0
             index = try {
@@ -63,8 +63,8 @@ class MyDialogFragment(val onClick: (String, String, Int) -> Unit) :
             } catch (e: NumberFormatException) {
                 DogRepository.listOfDog.size
             }
-                    onClick(title, description, index)
-                    myDialog?.dismiss()
+            onClick(title, description, index)
+            myDialog?.dismiss()
         }
     }
 }
