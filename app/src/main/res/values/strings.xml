@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Android Course</string>
+    <string name="dogs">Собачки</string>
+    <string name="dog">Собачка</string>
+    <string name="id">Id:</string>
+    <string name="country">Country:</string>
+    <string name="description">Description:</string>
+    <string name="title">Заголовок</string>
+    <string name="descript">Описание</string>
+    <string name="position">Позиция</string>
+    <string name="delete">Удалить</string>
+    <string name="country_ru">Страна</string>
+    <string name="button">Button</string>
+    <string name="ad">Реклама</string>
 </resources>
