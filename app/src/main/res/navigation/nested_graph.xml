@@ -8,18 +8,21 @@
         android:id="@+id/editProfileFragment"
         android:name="com.itis.androidcourse.EditProfileFragment"
         android:label="EditProfileFragment" />
+
     <fragment
         android:id="@+id/friendsFragment"
         android:name="com.itis.androidcourse.FriendsFragment"
         android:label="FriendsFragment" />
+
     <fragment
         android:id="@+id/favouritesFragment"
         android:name="com.itis.androidcourse.FavouritesFragment"
         android:label="FavouritesFragment" />
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.itis.androidcourse.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:label="ProfileFragment">
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
@@ -33,6 +36,7 @@
             android:id="@+id/action_profileFragment_to_friendsFragment"
             app:destination="@id/friendsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/notesFragment"
         android:name="com.itis.androidcourse.NotesFragment"

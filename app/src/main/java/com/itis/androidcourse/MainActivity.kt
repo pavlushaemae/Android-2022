@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             topLevelDestinationIds = setOf(
                 R.id.profileFragment,
-                R.id.profileFragmentContainer,
                 R.id.chatFragment,
                 R.id.musicFragment,
                 R.id.videoFragment,
@@ -30,7 +29,10 @@ class MainActivity : AppCompatActivity() {
             ),
             fallbackOnNavigateUpListener = ::onSupportNavigateUp
         )
-        findViewById<Toolbar>(androidx.appcompat.R.id.action_bar).setupWithNavController(controller,appBarConfiguration)
+        findViewById<Toolbar>(androidx.appcompat.R.id.action_bar).setupWithNavController(
+            controller,
+            appBarConfiguration
+        )
 
         binding?.run {
             bnvMain.setupWithNavController(controller)

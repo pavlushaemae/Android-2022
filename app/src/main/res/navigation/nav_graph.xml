@@ -2,32 +2,27 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nested_graph">
-
+    app:startDestination="@id/chatFragment">
 
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.itis.androidcourse.ChatFragment"
         android:label="ChatFragment" />
+
+    <include app:graph="@navigation/nested_graph" />
+
     <fragment
         android:id="@+id/musicFragment"
         android:name="com.itis.androidcourse.MusicFragment"
         android:label="MusicFragment" />
-    <fragment
-        android:id="@+id/profileFragmentContainer"
-        android:name="com.itis.androidcourse.ProfileContainerFragment"
-        android:label="ProfileFragment" >
-        <action
-            android:id="@+id/action_profileFragmentContainer_to_nested_graph3"
-            app:destination="@id/nested_graph" />
-    </fragment>
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.itis.androidcourse.SettingsFragment"
         android:label="SettingsFragment" />
+
     <fragment
         android:id="@+id/videoFragment"
         android:name="com.itis.androidcourse.VideoFragment"
         android:label="VideoFragment" />
-    <include app:graph="@navigation/nested_graph" />
 </navigation>

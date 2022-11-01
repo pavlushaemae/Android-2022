@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.itis.androidcourse.databinding.FragmentProfileBinding
 
-class ProfileFragment: Fragment(R.layout.fragment_profile) {
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -41,16 +39,32 @@ class ProfileFragment: Fragment(R.layout.fragment_profile) {
 
         binding.run {
             btnEdit.setOnClickListener {
-                findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment,null,options)
+                findNavController().navigate(
+                    R.id.action_profileFragment_to_editProfileFragment,
+                    null,
+                    options
+                )
             }
             btnFavourites.setOnClickListener {
-                findNavController().navigate(R.id.action_profileFragment_to_favouritesFragment,null,options)
+                findNavController().navigate(
+                    R.id.action_profileFragment_to_favouritesFragment,
+                    null,
+                    options
+                )
             }
             btnFriends.setOnClickListener {
-                findNavController().navigate(R.id.action_profileFragment_to_friendsFragment,null,options)
+                findNavController().navigate(
+                    R.id.action_profileFragment_to_friendsFragment,
+                    null,
+                    options
+                )
             }
             btnNotes.setOnClickListener {
-                findNavController().navigate(R.id.action_profileFragment_to_notesFragment,null,options)
+                findNavController().navigate(
+                    R.id.action_profileFragment_to_notesFragment,
+                    null,
+                    options
+                )
             }
         }
     }
