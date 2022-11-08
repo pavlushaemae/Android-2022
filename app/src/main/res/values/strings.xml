@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Android Course</string>
+    <string name="waked_up">Wake up!</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="default_notification_channel_name">First notification channel</string>
+    <string name="default_notification_channel_id">Notification id</string>
+    <string name="alarm_added">Alarm successfully added</string>
+    <string name="alarm_cancelled">Alarm cancelled</string>
+    <string name="_00_00_00" translatable="false">00.00.00</string>
+    <string name="_00_00" translatable="false">00:00</string>
 </resources>
