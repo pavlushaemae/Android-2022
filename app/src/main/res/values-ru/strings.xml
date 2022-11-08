@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android Course</string>
+    <string name="default_notification_channel_name">Первый канал уведомлений</string>
+    <string name="stop">Стоп</string>
+    <string name="start">Старт</string>
+    <string name="waked_up">Вы проснулись!</string>
+    <string name="default_notification_channel_id">Id уведомения</string>
+    <string name="alarm_added">Будильник успешно установлен</string>
+    <string name="alarm_cancelled">Будильник отменён</string>
+</resources>
