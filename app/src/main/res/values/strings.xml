@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Android Course</string>
+    <string name="add_picture">Прикрепить изображение</string>
+    <string name="there_picture">Здесь будет картинка</string>
+    <string name="choose">Choose</string>
+    <string name="not_allowed">Вы запретили открывать камеру и галерею</string>
+    <string name="allow">Разрешить</string>
+    <string name="need_allow">Требуется разрешение на камеру и галерею</string>
+    <string name="settings">Перейти в настройки</string>
 </resources>
