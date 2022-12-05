@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Android Course</string>
+    <string name="song">Song</string>
+    <string name="author">Author</string>
+    <string name="title">Title</string>
+    <string name="playlist">PlayList</string>
+    <string name="notification_channel_title">Music Player</string>
+    <string name="notification_channel_description">Play and Pause Music</string>
 </resources>
