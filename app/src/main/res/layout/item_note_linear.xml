@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/material_dynamic_neutral40">
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="?attr/colorSurfaceVariant"
+    android:elevation="24dp"
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="match_parent"
+        style="@style/CustomHeadline6"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/tv_description"
+        app:layout_constraintEnd_toStartOf="@id/iv_delete"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Dog" />
+        tools:text="@string/title" />
 
     <TextView
         android:id="@+id/tv_description"
-        android:layout_width="match_parent"
+        style="@style/CustomBody1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="#716E6E"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="Default" />
+        tools:text="@string/def" />
 
     <ImageView
         android:id="@+id/iv_delete"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:contentDescription="Удалить"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="@string/delete"
         android:src="@drawable/delete_24"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toEndOf="@id/tv_title"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

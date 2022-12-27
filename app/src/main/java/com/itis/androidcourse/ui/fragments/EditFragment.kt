@@ -2,30 +2,27 @@ package com.itis.androidcourse.ui.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationManager
+import android.location.*
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
-import com.itis.androidcourse.MainActivity
 import com.itis.androidcourse.R
 import com.itis.androidcourse.data.entity.Note
 import com.itis.androidcourse.data.repository.NoteRepository
 import com.itis.androidcourse.databinding.FragmentEditBinding
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 class EditFragment : Fragment(R.layout.fragment_edit) {
@@ -36,20 +33,20 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
     private var currentId: Int? = null
     private var locationManager: LocationManager? = null
     private var currentLocation: Location? = null
+    private var geocoder: Geocoder? = null
+    private var address: Address? = null
 
-    var mFusedLocationClient: FusedLocationProviderClient? = null
 
     private val settings =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
+
 
     private val permission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { granted ->
             granted?.run {
                 when {
                     granted.values.all { true } -> {
-//                        currentLocation = getCurrentLocation()
-//                        println("${currentLocation?.latitude} ffffffffffff")
-//                        addNote()
+                        addNote()
                     }
                     !shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
                             || !shouldShowRequestPermissionRationale(
@@ -72,11 +69,19 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             }
         }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        geocoder = Geocoder(requireContext(), Locale.getDefault())
+        locationManager = requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentEditBinding.bind(view)
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-//        locationManager = requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager
         context?.also {
             noteRepository = NoteRepository(it)
         }
@@ -84,8 +89,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         binding?.run {
             btnSave.setOnClickListener {
                 if (currentId == null && isNoteCorrect()) {
-//                    p()
-                    addNote()
+                    p()
                 } else {
                     currentId?.let {
                         updateNote(it)
@@ -104,8 +108,17 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
                     note?.let { n ->
                         etTitle.setText(n.title)
                         etDescription.setText(n.description)
-                        tvCoordinates.text = "${n.latitude} ${n.longitude}"
-                        tvDate.text = n.date?.toString()
+                        if (n.latitude != null && n.longitude != null) {
+                            address =
+                                geocoder?.getFromLocation(n.latitude, n.longitude, 1)?.get(0)
+                        }
+                        tvCoordinates.text = "${address?.getAddressLine(0)}"
+                        n.date?.run {
+                            tvDate.text =
+                                SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(
+                                    this
+                                )
+                        }
                     }
                 }
             }
@@ -138,32 +151,40 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
     }
 
     private fun p() {
-        if (shouldShowRequestPermissionRationale(
+        when {
+            ContextCompat.checkSelfPermission(
+                this.requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) ||
-            shouldShowRequestPermissionRationale(
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        ) {
-            println(shouldShowRequestPermissionRationale(
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) ||
-                    shouldShowRequestPermissionRationale(
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                addNote()
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
+                requestPerms()
+            }
+            else -> {
+                permission.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION
-                    ))
-            permission.launch(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
                 )
-            )
-        } else {
-            requestPerms()
-
+            }
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun addNote() {
+
+        val locationListenerGPS = LocationListener { loc -> currentLocation = loc }
+        locationManager?.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER,
+            1000L,
+            500.0f,
+            locationListenerGPS
+        )
+        locationManager?.let {
+            currentLocation = it.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        }
 
         lifecycleScope.launch {
             binding?.apply {
@@ -219,43 +240,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
-        ActivityCompat.requestPermissions(requireActivity(), permissions, 0)
-    }
-
-//    private fun getLocation(): Location? {
-//        if (ActivityCompat.checkSelfPermission(
-//                requireContext(),
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-//                requireContext(),
-//                Manifest.permission.ACCESS_COARSE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            requestPerms()
-//        }
-//        return locationManager?
-//    }
-
-    @SuppressLint("MissingPermission")
-    private fun getCurrentLocation(): Location? {
-        var location: Location? = null
-        val locationManager =
-            activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) or
-            locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-        ) {
-
-                mFusedLocationClient?.lastLocation?.addOnCompleteListener {
-                    location = it.result
-                }
-
-        } else {
-            startActivity(
-                Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
-        }
-        return location
+        activity?.requestPermissions(permissions, 0)
     }
 
     private fun openApplicationSettings() {
@@ -269,6 +254,12 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
     override fun onDestroy() {
         binding = null
         noteRepository = null
+        geocoder = null
+        currentLocation = null
+        currentId = null
+        address = null
+        note = null
+        locationManager = null
         super.onDestroy()
     }
 

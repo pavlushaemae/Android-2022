@@ -1,6 +1,5 @@
 package com.itis.androidcourse.recycler.adapter
 
-import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,8 @@ class NoteAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val v: View = LayoutInflater.from(parent.context).inflate(
             if (isLinear) R.layout.item_note_linear else R.layout.item_note_grid,
-            null
+            parent,
+            false
         )
         return NoteHolder.create(action, actionDelete, v)
     }

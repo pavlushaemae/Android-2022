@@ -1,8 +1,6 @@
 package com.itis.androidcourse.recycler.holder
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -32,11 +30,10 @@ class NoteHolder(
     }
 
 
-
     fun onBind(note: Note) {
         this.note = note
-            tvTitle?.text = note.title
-            tvDescription?.text = note.description
+        tvTitle?.text = note.title
+        tvDescription?.text = note.description
     }
 
     companion object {

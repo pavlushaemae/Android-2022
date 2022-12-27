@@ -1,16 +1,15 @@
 package com.itis.androidcourse.ui.fragments
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.itis.androidcourse.R
 import com.itis.androidcourse.data.entity.Note
 import com.itis.androidcourse.data.repository.NoteRepository
@@ -40,20 +39,16 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentListBinding.bind(view)
-        isLinear = true
         when (isLinear) {
             null -> {
-                binding.rvNote.layoutManager = LinearLayoutManager(activity)
+                binding.rvNote.layoutManager = GridLayoutManager(activity, 2)
                 isLinear = true
-                println("flag1")
             }
             true -> {
                 binding.rvNote.layoutManager = LinearLayoutManager(activity)
-                println("flag2")
             }
             false -> {
-                binding.rvNote.layoutManager = LinearLayoutManager(activity)
-                println("flag3")
+                binding.rvNote.layoutManager = GridLayoutManager(activity, 2)
             }
         }
         context?.also {
@@ -102,7 +97,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         isLinear?.let {
 
             val pref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-            with (pref.edit()) {
+            with(pref.edit()) {
                 putBoolean(ARG_IS_LINEAR, it)
                 commit()
             }
@@ -117,7 +112,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun getAdapter(isLinear: Boolean): NoteAdapter {
-        return NoteAdapter(isLinear,  {
+        return NoteAdapter(isLinear, {
             parentFragmentManager
                 .beginTransaction()
                 .setCustomAnimations(
@@ -166,14 +161,13 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 adapter = getAdapter(it)
                 binding.rvNote.adapter = adapter
                 binding.rvNote.layoutManager = if (isLinear == true) {
-                    item.icon = resources.getDrawable(R.drawable.view_linear_24, context?.theme)
+                    item.icon =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.view_linear_24)
                     LinearLayoutManager(activity)
                 } else {
-                    item.icon = resources.getDrawable(R.drawable.grid_view_24, context?.theme)
+                    item.icon = ContextCompat.getDrawable(requireContext(), R.drawable.grid_view_24)
                     GridLayoutManager(activity, 2)
                 }
-
-                println("$it aaaaaaaaaaaaa")
                 updateNotes()
             }
             true
@@ -186,7 +180,6 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     private fun updateNotes() {
         lifecycleScope.launch {
             notes = noteRepository?.getNotes()
-            println(" notes  ${noteRepository?.getNotes()}")
             binding.apply {
                 if (notes.isNullOrEmpty()) {
                     rvNote.visibility = View.GONE
@@ -198,7 +191,6 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 }
             }
         }
-
     }
 
     override fun onResume() {
@@ -211,6 +203,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         adapter = null
         isLinear = null
         noteRepository = null
+        itemDecoration = null
         super.onDestroy()
     }
 

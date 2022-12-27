@@ -23,25 +23,7 @@ class SpaceItemDecorator(
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        val spacingMiddle = (spacingPx * 0.5).toInt()
-
-        val viewHolder = parent.getChildViewHolder(view)
-        val currentPosition = parent.getChildAdapterPosition(view).takeIf {
-            it != RecyclerView.NO_POSITION
-        } ?: viewHolder.oldPosition
-
-        when (currentPosition) {
-            0 -> {
-                outRect.top = spacingPx
-            }
-            state.itemCount - 1 -> {
-                outRect.top = spacingPx
-                outRect.bottom = spacingPx
-            }
-            else -> {
-                outRect.top = spacingPx
-            }
-        }
+        outRect.top = spacingPx
         outRect.left = spacingPx
         outRect.right = spacingPx
     }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomHeadline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/ubuntu_bold</item>
+        <item name="color">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="CustomBody1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/ubuntu_regular</item>
+        <item name="color">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="CustomButton" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/ubuntu_regular</item>
+        <item name="color">?attr/colorOnPrimary</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="CustomBody1.Default">
+        <item name="android:textSize">12sp</item>
+    </style>
+</resources>

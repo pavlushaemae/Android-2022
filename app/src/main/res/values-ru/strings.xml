@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android Course</string>
+    <string name="note">заметка</string>
+    <string name="title">Заглавие</string>
+    <string name="def">Стандартный</string>
+    <string name="delete">Удалить</string>
+    <string name="to_start">Для начала работы создайте первую цель</string>
+    <string name="add">добавить</string>
+    <string name="save">Сохранить</string>
+</resources>
