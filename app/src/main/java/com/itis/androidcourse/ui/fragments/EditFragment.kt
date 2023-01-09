@@ -89,7 +89,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         binding?.run {
             btnSave.setOnClickListener {
                 if (currentId == null && isNoteCorrect()) {
-                    p()
+                    checkAndAddNote()
                 } else {
                     currentId?.let {
                         updateNote(it)
@@ -150,7 +150,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         parentFragmentManager.popBackStack()
     }
 
-    private fun p() {
+    private fun checkAndAddNote() {
         when {
             ContextCompat.checkSelfPermission(
                 this.requireContext(),

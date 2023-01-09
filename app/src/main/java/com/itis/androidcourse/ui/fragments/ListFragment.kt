@@ -72,21 +72,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 rvNote.addItemDecoration(it)
             }
             fabNew.setOnClickListener {
-                parentFragmentManager
-                    .beginTransaction()
-                    .setCustomAnimations(
-                        androidx.appcompat.R.anim.abc_fade_in,
-                        androidx.appcompat.R.anim.abc_fade_out,
-                        androidx.appcompat.R.anim.abc_fade_in,
-                        androidx.appcompat.R.anim.abc_fade_out
-                    )
-                    .replace(
-                        R.id.container,
-                        EditFragment.newInstance(null),
-                        "newNote"
-                    )
-                    .addToBackStack("BackToList")
-                    .commit()
+                navigateTo(EditFragment.newInstance(null), "newNote")
             }
         }
         updateNotes()
@@ -104,7 +90,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         }
     }
 
-    private fun deleteAll() {
+    private fun onDeleteAllClick() {
         lifecycleScope.launch {
             noteRepository?.deleteAllNotes()
             updateNotes()
@@ -113,21 +99,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
     private fun getAdapter(isLinear: Boolean): NoteAdapter {
         return NoteAdapter(isLinear, {
-            parentFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(
-                    androidx.appcompat.R.anim.abc_fade_in,
-                    androidx.appcompat.R.anim.abc_fade_out,
-                    androidx.appcompat.R.anim.abc_fade_in,
-                    androidx.appcompat.R.anim.abc_fade_out
-                )
-                .replace(
-                    R.id.container,
-                    EditFragment.newInstance(it.id),
-                    "ToEdit"
-                )
-                .addToBackStack("BackToList")
-                .commit()
+            navigateTo( EditFragment.newInstance(it.id), "ToEdit")
         }, {
             lifecycleScope.launch {
                 noteRepository?.deleteNote(note = it)
@@ -142,34 +114,16 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_delete_all -> {
-            deleteAll()
+            onDeleteAllClick()
             true
         }
 
         R.id.action_switch_theme -> {
-            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            else
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            onSwitchThemeClick()
             true
         }
         R.id.action_switch_layout_manager -> {
-            isLinear?.let {
-                isLinear = !it
-            }
-            isLinear?.let {
-                adapter = getAdapter(it)
-                binding.rvNote.adapter = adapter
-                binding.rvNote.layoutManager = if (isLinear == true) {
-                    item.icon =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.view_linear_24)
-                    LinearLayoutManager(activity)
-                } else {
-                    item.icon = ContextCompat.getDrawable(requireContext(), R.drawable.grid_view_24)
-                    GridLayoutManager(activity, 2)
-                }
-                updateNotes()
-            }
+            onSwitchLayoutClick(item)
             true
         }
         else -> {
@@ -191,6 +145,50 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 }
             }
         }
+    }
+
+    private fun onSwitchLayoutClick(item: MenuItem) {
+        isLinear?.let {
+            isLinear = !it
+        }
+        isLinear?.let {
+            adapter = getAdapter(it)
+            binding.rvNote.adapter = adapter
+            binding.rvNote.layoutManager = if (isLinear == true) {
+                item.icon =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.view_linear_24)
+                LinearLayoutManager(activity)
+            } else {
+                item.icon = ContextCompat.getDrawable(requireContext(), R.drawable.grid_view_24)
+                GridLayoutManager(activity, 2)
+            }
+            updateNotes()
+        }
+    }
+
+    private fun onSwitchThemeClick() {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    }
+
+    private fun navigateTo(fragment: Fragment, tag: String) {
+        parentFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(
+                androidx.appcompat.R.anim.abc_fade_in,
+                androidx.appcompat.R.anim.abc_fade_out,
+                androidx.appcompat.R.anim.abc_fade_in,
+                androidx.appcompat.R.anim.abc_fade_out
+            )
+            .replace(
+                R.id.container,
+                fragment,
+                tag
+            )
+            .addToBackStack("BackToList")
+            .commit()
     }
 
     override fun onResume() {
