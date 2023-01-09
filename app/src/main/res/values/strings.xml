@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Android Course</string>
+    <string name="counter">Counter value: </string>
+    <string name="go_to_second_fragment">Перейти на второй фрагмент</string>
+    <string name="counter_plus">Коунтер++</string>
+    <string name="open">Открыть диалог</string>
+    <string name="add_number">Введите число</string>
 </resources>
