@@ -44,7 +44,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
                 tvCounter.text = "Counter value: $counter"
             }
             btnDialog.setOnClickListener {
-                val dialog = CounterDialogFragment(counter) { num ->
+                val dialog = CounterDialogFragment.newInstance(counter) { num ->
                     counter = num
                     tvCounter.text = "Counter value: $counter"
                     arguments?.apply {

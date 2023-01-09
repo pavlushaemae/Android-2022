@@ -8,18 +8,25 @@ import android.view.View
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputLayout
+import com.itis.androidcourse.databinding.FragmentDialogBinding
+import com.itis.androidcourse.databinding.FragmentFirstBinding
 
-class CounterDialogFragment(private var counter: Int, val onClick: (Int) -> Unit) :
+class CounterDialogFragment() :
     DialogFragment(R.layout.fragment_dialog) {
 
+    private var _binding: FragmentDialogBinding? = null
+    private val binding get() = _binding!!
+    private var counter: Int? = null
+    private var onClick: ((Int) -> Unit)? = null
     private var viewDialog: View? = null
     private var myDialog: AlertDialog? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         viewDialog = LayoutInflater.from(requireContext())
-            .inflate(R.layout.fragment_dialog, null, false)
-
+            .inflate(R.layout.fragment_dialog, null, false).also {
+                _binding = FragmentDialogBinding.bind(it)
+            }
         myDialog = AlertDialog.Builder(requireContext())
             .setTitle("Сложить или вычесть?")
             .setView(viewDialog)
@@ -34,44 +41,55 @@ class CounterDialogFragment(private var counter: Int, val onClick: (Int) -> Unit
 
     override fun onStart() {
         super.onStart()
-        val editText = viewDialog?.findViewById<EditText>(R.id.et_number)
-        val inputLayout = viewDialog?.findViewById<TextInputLayout>(R.id.til_text)
         var num = 0
         myDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
             try {
-                num = editText?.text.toString().toInt()
+                num = binding.etNumber.text.toString().toInt()
                 if (num in 0..100) {
-                    counter += num
-                    onClick(counter)
-                    myDialog?.dismiss()
+                    counter?.also { c ->
+                        onClick?.invoke(c + num)
+                        counter = c + num
+                        myDialog?.dismiss()
+                    }
                 } else {
-                    inputLayout?.error = "Не верный формат данных"
+                    binding.tilText.error = "Не верный формат данных"
                 }
             } catch (e: NumberFormatException) {
-                inputLayout?.error = "Не верный формат данных"
+                binding.tilText.error = "Не верный формат данных"
             }
         }
         myDialog?.getButton(AlertDialog.BUTTON_NEUTRAL)?.setOnClickListener {
             try {
-                num = editText?.text.toString().toInt()
-                when {
-                    (num in 0..100 && counter - num >= 0) -> {
-                        counter -= num
-                        onClick(counter)
-                        println(counter)
-                        myDialog?.dismiss()
-                    }
-                    (counter - num < 0 && num in 0..100) -> {
-                        inputLayout?.error =
-                            "Значение счётчика не может быть отрицательным числом"
-                    }
-                    else -> {
-                        inputLayout?.error = "Не верный формат данных"
+                num = binding.etNumber.text.toString().toInt()
+                counter?.let {
+                    when {
+                        (num in 0..100 && it - num >= 0) -> {
+                            onClick?.invoke(it - num)
+                            counter = it - num
+                            myDialog?.dismiss()
+                        }
+                        (it - num < 0 && num in 0..100) -> {
+                            binding.tilText.error =
+                                "Значение счётчика не может быть отрицательным числом"
+                        }
+                        else -> {
+                            binding.tilText.error = "Не верный формат данных"
+                        }
                     }
                 }
+
             } catch (e: NumberFormatException) {
-                inputLayout?.error = "Не верный формат данных"
+                binding.tilText.error = "Не верный формат данных"
             }
         }
+    }
+
+    companion object {
+        fun newInstance(counter: Int, onClick: (Int) -> Unit): CounterDialogFragment =
+            CounterDialogFragment().also {
+                it.onClick = onClick
+                it.counter = counter
+            }
+
     }
 }
