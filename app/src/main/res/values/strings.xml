@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Android Course</string>
+    <string name="note">note</string>
+    <string name="title">Title</string>
+    <string name="def">Default</string>
+    <string name="delete">Delete</string>
+    <string name="to_start">Add note to get started</string>
+    <string name="add">add</string>
+    <string name="save">Save</string>
 </resources>
